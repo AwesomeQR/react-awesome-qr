@@ -2721,10 +2721,10 @@ autoprefixer@^9.7.2:
     postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
 
-awesome-qr@^2.0.0-rc.1:
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/awesome-qr/-/awesome-qr-2.0.0-rc.1.tgz#b649ece67ea05c8014049b4fce880426a8de7d31"
-  integrity sha512-mBPCo0qTW2VDcxUMN3t5L7bo9cu8DmBWkmTb2rVa/TFG943/PA2QVRG/w1kJ2XR8PnO44lH2P1sGni4GZRarpw==
+awesome-qr@^2.0.0-rc.3:
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/awesome-qr/-/awesome-qr-2.0.0-rc.3.tgz#162173665ddb9da98c95f60fe1c0ab6b845b503e"
+  integrity sha512-1QpfMiQp7huWmOnmSnW+ugvDS/UhaIbU90PndPbnwhI1k/hdXKB+2yZ+XMXVBRKs6fFWQgRn570dwVTOFi7D6Q==
   dependencies:
     buffer "^6.0.3"
     canvas "^2.6.1"

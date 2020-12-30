@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "awesome-qr": "^2.0.0-rc.1"
+    "awesome-qr": "^2.0.0-rc.3"
   },
   "peerDependencies": {
     "react": "^17.0.1",
