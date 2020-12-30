@@ -1,6 +1,6 @@
 {
   "name": "@awesomeqr/react",
-  "version": "0.0.1-beta.16",
+  "version": "0.0.1-rc.1",
   "description": "A React Component for Awesome-qr.js",
   "keywords": [
     "qr",
@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "awesome-qr": "^2.0.0-beta.15"
+    "awesome-qr": "^2.0.0-rc.1"
   },
   "peerDependencies": {
     "react": "^17.0.1",
