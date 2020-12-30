@@ -1,6 +1,6 @@
 {
   "name": "@awesomeqr/react",
-  "version": "0.0.1-rc.1",
+  "version": "0.0.1-rc.2",
   "description": "A React Component for Awesome-qr.js",
   "keywords": [
     "qr",
