@@ -34,7 +34,7 @@ The _AwesomeQRCode_ components accepts properties as defined in [Options in Awes
 Awesome-qr.js is licensed under Apache License 2.0 License.
 
 ```
-Copyright 2020 Makito
+Copyright (c) 2020 Makito
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
