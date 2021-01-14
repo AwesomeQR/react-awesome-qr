@@ -1,35 +1,38 @@
-import { Options } from "awesome-qr";
-import { AwesomeQR } from "awesome-qr/dist/awesome-qr";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { AwesomeQR, Options } from "awesome-qr";
+import React, { useEffect, useRef, useState } from "react";
 
-const asyncDraw = async (instance: AwesomeQR, serial: number) => {
-  const dataUri = (await instance.draw()) as string;
-  return { dataUri, serial };
-};
+export type AwesomeQRCodeState = "working" | "idle";
+export interface AwesomeQRCodeProps extends Partial<Options> {
+  onStateChange?: (state: AwesomeQRCodeState) => void;
+}
 
-export const AwesomeQRCode: React.FC<Partial<Options>> = (
-  options: Partial<Options>
+export const AwesomeQRCode: React.FC<AwesomeQRCodeProps> = (
+  props: AwesomeQRCodeProps
 ) => {
-  const asyncDrawSerial = useRef<number>(0);
+  const { onStateChange } = props;
+  const options = { ...props };
+  delete options.onStateChange;
 
-  const qrInstance = useMemo(() => new AwesomeQR(options), [options]);
+  const asyncDrawSerial = useRef<number>(0);
   const [qrDataUri, setQrDataUri] = useState<string>();
 
   useEffect(() => {
-    if (qrInstance) {
-      (async () => {
-        const snapshotSerial = asyncDrawSerial.current;
-        if (asyncDrawSerial.current >= Number.MAX_SAFE_INTEGER) {
-          asyncDrawSerial.current = 0;
-        } else {
-          asyncDrawSerial.current++;
-        }
-        const { dataUri, serial } = await asyncDraw(qrInstance, snapshotSerial);
-        if (snapshotSerial !== serial) return;
+    (async () => {
+      if (asyncDrawSerial.current >= Number.MAX_SAFE_INTEGER) {
+        asyncDrawSerial.current = 0;
+      } else {
+        asyncDrawSerial.current++;
+      }
+      const snapshotSerial = asyncDrawSerial.current;
+      const instance = new AwesomeQR(options);
+      onStateChange && onStateChange("working");
+      instance.draw().then((dataUri: string) => {
+        if (snapshotSerial !== asyncDrawSerial.current) return;
         setQrDataUri(dataUri);
-      })();
-    }
-  }, [qrInstance]);
+        onStateChange && onStateChange("idle");
+      });
+    })();
+  }, [options]);
 
   return (
     <div
@@ -45,4 +48,7 @@ export const AwesomeQRCode: React.FC<Partial<Options>> = (
   );
 };
 
-AwesomeQRCode.defaultProps = AwesomeQR._defaultOptions;
+AwesomeQRCode.defaultProps = {
+  ...AwesomeQR._defaultOptions,
+  size: 400,
+};

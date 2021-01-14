@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/react/types-6-0";
 import { Options, QRErrorCorrectLevel } from "awesome-qr";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AwesomeQRCode } from "./awesome-qr-code";
 
 export default {
@@ -35,3 +35,33 @@ ColorCustomized.args = {
   colorDark: "#ff5d8f",
   autoColor: false,
 };
+
+export const WithBackground = Template.bind({});
+WithBackground.args = {
+  backgroundImage: "/donuts.jpg",
+};
+
+export const WithGIFBackground = (options: Options) => {
+  const [arrayBuffer, setArrayBuffer] = useState<ArrayBuffer>();
+
+  useEffect(() => {
+    fetch("/kira.gif")
+      .then((r) => r.blob())
+      .then((blob) => blob.arrayBuffer())
+      .then((ab) => setArrayBuffer(ab));
+  }, []);
+
+  if (!arrayBuffer) return <div></div>;
+
+  return (
+    <div style={{ width: 400, height: 400 }}>
+      <AwesomeQRCode
+        {...{
+          ...options,
+          gifBackground: arrayBuffer,
+        }}
+      />
+    </div>
+  );
+};
+WithGIFBackground.args = {};
