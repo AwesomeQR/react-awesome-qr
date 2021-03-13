@@ -13,7 +13,7 @@ npm install --save @awesomeqr/react
 ```
 
 ```tsx
-import { AwesomeQRCode } from "@awesomeqr/react"
+import { AwesomeQRCode } from "@awesomeqr/react";
 
 // ...
 
@@ -32,7 +32,16 @@ import { AwesomeQRCode } from "@awesomeqr/react"
         break;
     }
   }}
-/>
+/>;
+```
+
+## Examples
+
+The project provides a examples gallery which demonstrates basic usages of the component.
+
+```bash
+yarn build
+yarn examples
 ```
 
 ## Props
