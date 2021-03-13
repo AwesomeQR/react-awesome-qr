@@ -13,40 +13,54 @@ npm install --save @awesomeqr/react
 ```
 
 ```tsx
-import { AwesomeQRCode, AwesomeQRCodeProps, AwesomeQRCodeState } from "@awesomeqr/react"
+import { AwesomeQRCode } from "@awesomeqr/react"
 
-const props: AwesomeQRCodeProps = {
-    text: "Hello AwesomeQR",
-    ...
-    onStateChange: (state: AwesomeQRCodeState) => {
-        switch (state) {
-            case 'working':
-                // ...
-                break
-            case 'idle':
-                // ...
-                break
-        }
+// ...
+
+<AwesomeQRCode
+  options={{
+    text: "Awesome-qr.js",
+    // ...
+  }}
+  onStateChange={(state) => {
+    switch (state) {
+      case "working":
+        // ...
+        break;
+      case "idle":
+        // ...
+        break;
     }
+  }}
+/>
+```
+
+## Props
+
+```typescript
+interface AwesomeQRCodeProps {
+  options: Partial<Options>;
+  onStateChange?: (state: AwesomeQRCodeState) => void;
 }
-
-...
-
-<AwesomeQRCode {...props} />
 ```
 
-## Configuration
+### _options_
 
-_AwesomeQRCodeProps_ contains the properties from _Options_ as defined in [Options: Awesome-qr.js](https://github.com/SumiMakito/Awesome-qr.js/blob/master/README.md#options) and a few exclusive properties owned by this component.
+**Type** `Partial<Options>`
 
-### onStateChange
+Use this field to customize the style of your QR code.
 
-```ts
-((state: AwesomeQRCodeState) => void)?
-                         ↖ 'working' | 'idle'
-```
+_Options_ object defined here will be passed to the core of Awesome-qr.js.
 
-Setting up a state changes listener to know when the core is working or idle.
+Read the section [Options: Awesome-qr.js](https://github.com/SumiMakito/Awesome-qr.js/blob/master/README.md#options) to learn more.
+
+### _onStateChange_
+
+**Type** `((state: AwesomeQRCodeState) => void)?`
+
+An optional listener for receiving the state changes.
+
+_AwesomeQRCodeState_ is a string type contains two values: `"working"` and `"idle"`.
 
 ## Copyright &amp; License
 

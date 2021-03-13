@@ -2,7 +2,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
-import dts from "rollup-plugin-dts";
 import packageJson from "./package.json";
 
 export default [
@@ -16,25 +15,15 @@ export default [
       },
       {
         file: packageJson.module,
-        format: "es",
+        format: "esm",
         sourcemap: true,
       },
     ],
     plugins: [
       peerDepsExternal(),
-      resolve({
-        module: true,
-        jsnext: true,
-        main: true,
-        browser: true,
-      }),
+      resolve({ browser: true }),
       commonjs(),
       typescript(),
     ],
-  },
-  {
-    input: "./src/index.ts",
-    output: [{ file: "./lib/index.d.ts", format: "es" }],
-    plugins: [dts({ respectExternal: true })],
   },
 ];

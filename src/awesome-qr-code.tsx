@@ -1,37 +1,30 @@
 import { AwesomeQR, Options } from "awesome-qr";
+import Promise from "bluebird";
 import React, { useEffect, useRef, useState } from "react";
 
 export type AwesomeQRCodeState = "working" | "idle";
-export interface AwesomeQRCodeProps extends Partial<Options> {
+export interface AwesomeQRCodeProps {
+  options: Partial<Options>;
   onStateChange?: (state: AwesomeQRCodeState) => void;
 }
 
-export const AwesomeQRCode: React.FC<AwesomeQRCodeProps> = (
-  props: AwesomeQRCodeProps
-) => {
-  const { onStateChange } = props;
-  const options = { ...props };
-  delete options.onStateChange;
-
-  const asyncDrawSerial = useRef<number>(0);
+export const AwesomeQRCode: React.FC<AwesomeQRCodeProps> = ({ options, onStateChange }: AwesomeQRCodeProps) => {
+  const currentTask = useRef<Promise<string>>();
   const [qrDataUri, setQrDataUri] = useState<string>();
 
   useEffect(() => {
-    (async () => {
-      if (asyncDrawSerial.current >= Number.MAX_SAFE_INTEGER) {
-        asyncDrawSerial.current = 0;
-      } else {
-        asyncDrawSerial.current++;
-      }
-      const snapshotSerial = asyncDrawSerial.current;
+    if (currentTask.current && !currentTask.current.isFulfilled && !currentTask.current.isCancelled) {
+      currentTask.current.cancel();
+    }
+    currentTask.current = new Promise((resolve) => {
       const instance = new AwesomeQR(options);
       onStateChange && onStateChange("working");
-      instance.draw().then((dataUri: string) => {
-        if (snapshotSerial !== asyncDrawSerial.current) return;
-        setQrDataUri(dataUri);
-        onStateChange && onStateChange("idle");
-      });
-    })();
+      instance.draw().then((dataUri) => resolve(dataUri as string));
+    });
+    currentTask.current.then((dataUri) => {
+      setQrDataUri(dataUri as string);
+      onStateChange && onStateChange("idle");
+    });
   }, [options]);
 
   return (
@@ -39,16 +32,41 @@ export const AwesomeQRCode: React.FC<AwesomeQRCodeProps> = (
       style={{
         width: "100%",
         height: "100%",
-        backgroundImage: `url(${qrDataUri})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "contain",
-        backgroundPosition: "center",
       }}
-    />
+    >
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url(${qrDataUri})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "contain",
+          backgroundPosition: "center",
+        }}
+      />
+    </div>
   );
 };
 
+const a = (
+  <AwesomeQRCode
+    options={{
+      text: "Awesome-qr.js",
+      // ...
+    }}
+    onStateChange={(state: AwesomeQRCodeState) => {
+      switch (state) {
+        case "working":
+          // ...
+          break;
+        case "idle":
+          // ...
+          break;
+      }
+    }}
+  />
+);
+
 AwesomeQRCode.defaultProps = {
-  ...AwesomeQR._defaultOptions,
-  size: 400,
+  options: AwesomeQR.defaultOptions,
 };
