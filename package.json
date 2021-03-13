@@ -18,9 +18,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006 -s ./public",
     "examples": "cd examples && craco start",
-    "build-storybook": "build-storybook",
     "clean": "rimraf ./lib",
     "rollup": "rollup -c",
     "dts-bundle": "dts-bundle-generator --external-inlines=awesome-qr -o lib/index.d.ts src/index.ts",
