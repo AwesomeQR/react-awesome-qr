@@ -40,8 +40,9 @@ import { AwesomeQRCode } from "@awesomeqr/react";
 The project provides a examples gallery which demonstrates basic usages of the component.
 
 ```bash
-yarn build
-yarn examples
+yarn # or: npm install
+yarn build # or: npm run build
+yarn examples # or: npm run examples
 ```
 
 ## Props
