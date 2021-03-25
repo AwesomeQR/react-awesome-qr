@@ -1,6 +1,6 @@
 {
   "name": "@awesomeqr/react",
-  "version": "0.1.1-rc.0",
+  "version": "0.1.2-rc.0",
   "description": "A React Component for Awesome-qr.js",
   "keywords": [
     "qr",
@@ -25,8 +25,16 @@
     "build": "npm-run-all -s rollup dts-bundle",
     "prepublishOnly": "npm-run-all -s clean build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AwesomeQR/react-awesome-qr.git"
+  },
   "author": "Makito <sumimakito@hotmail.com>",
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/AwesomeQR/react-awesome-qr/issues"
+  },
+  "homepage": "https://github.com/AwesomeQR/react-awesome-qr#readme",
   "browserslist": {
     "production": [
       ">0.2%",
