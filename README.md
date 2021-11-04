@@ -1,4 +1,4 @@
-# react-awesome-qr
+# @awesomeqr/react
 
 A React Component for Awesome-qr.js
 
